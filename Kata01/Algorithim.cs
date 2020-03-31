@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Kata01
 {
@@ -30,9 +32,19 @@ namespace Kata01
 
         public void seperate(string s)
         {
+            List<string> st = s.Trim().Split('\n').ToList();
+            string pattern;
+
+            pattern = @"^\s*";
+            for (int i = 0; i < st.Count; i++)
+            {
+                string phone = "";
+                string name = "";
+                string address = "";
 
 
-
+                people.Add(new Person(name, phone, address));
+            }
         }
 
         public string Phone(string s, string num)
@@ -43,17 +55,17 @@ namespace Kata01
             Person result = null;
             foreach (Person p in people)
             {
-                if(p.Num.Equals(num))
+                if (p.Num.Equals(num))
                 {
                     count++;
-                    if(count > 1)
+                    if (count > 1)
                     {
                         return "Error => Too many people: " + num;
                     }
                     result = p;
                 }
             }
-            if(result == null)
+            if (result == null)
             {
                 return "Error => Not found: " + num;
             }
@@ -63,6 +75,6 @@ namespace Kata01
             }
 
         }
-        
+
     }
 }
