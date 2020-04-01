@@ -120,7 +120,7 @@ namespace Kata01
             string namePattern = @"<.*>";
             Regex nameRgx = new Regex(namePattern);
 
-            string addressPattern = @"([^a-z A-z.,\-0-9])";
+            string addressPattern = @"([^a-z A-z.\-0-9])";
             Regex addressRgx = new Regex(addressPattern);
 
             string extraPattern = @"\s{2,}";
