@@ -6,7 +6,8 @@ namespace Kata01
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Algorithim a = new Algorithim();
+            a.seperate("/+1-541-754-3010 156 Alphand_St. <J Steeve>\n");
         }
     }
 }

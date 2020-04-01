@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -27,20 +28,26 @@ namespace Kata01
 
     public class Algorithim
     {
+        NumberFormatInfo nfi = NumberFormatInfo.CurrentInfo;
 
         public List<Person> people = new List<Person>();
 
         public void seperate(string s)
         {
             List<string> st = s.Trim().Split('\n').ToList();
-            string pattern;
+            string phonePattern;
+            phonePattern = @"[+]\d*[-]\d\d\d[-]\d\d\d[-]\d\d\d\d";
+            Regex phoneRgx = new Regex(phonePattern);
 
-            pattern = @"^\s*";
             for (int i = 0; i < st.Count; i++)
             {
                 string phone = "";
-                string name = "";
-                string address = "";
+                if (phoneRgx.IsMatch(st[i]))
+                {
+                    phone = "is phone number";
+                }
+                string name = "name";
+                string address = "address";
 
 
                 people.Add(new Person(name, phone, address));
