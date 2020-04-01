@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -28,20 +27,18 @@ namespace Kata01
 
     public class Algorithim
     {
-        NumberFormatInfo nfi = NumberFormatInfo.CurrentInfo;
-
         public List<Person> people = new List<Person>();
 
         public void seperate(string s)
         {
             List<string> st = s.Trim().Split('\n').ToList();
-            string phonePattern = @"[+]\d*[-]\d{3}[-]\d{3}[-]\d{4}";
+            string phonePattern = @"\d*[-]\d{3}[-]\d{3}[-]\d{4}";
             Regex phoneRgx = new Regex(phonePattern);
 
             string namePattern = @"<.*>";
             Regex nameRgx = new Regex(namePattern);
 
-            string addressPattern = @"([^a-z A-z.,0-9]|[_])";
+            string addressPattern = @"([^a-z A-z.,0-9])";
             Regex addressRgx = new Regex(addressPattern);
 
             for (int i = 0; i < st.Count; i++)
@@ -49,26 +46,30 @@ namespace Kata01
                 string phone = "";
                 string name = "";
                 string address = "";
+
+                Match phoneM = phoneRgx.Match(st[i]);
+                Match nameM = nameRgx.Match(st[i]);
+
                 if (phoneRgx.IsMatch(st[i]))
                 {
-                    phone = "";
+                    phone = phoneM.Value;
+                    st[i] = phoneRgx.Replace(st[i], "");
                 }
                 else { break; }
                 if (nameRgx.IsMatch(st[i]))
                 {
-                    name = "is name";
+                    name = addressRgx.Replace(nameM.Value, "");
+                    st[i] = nameRgx.Replace(st[i], "");
                 }
                 else { break; }
-                if (addressRgx.IsMatch(st[i]))
-                {
-                    address = "is address";
-                }
-                
+                st[i] = addressRgx.Replace(st[i], "");
+                address = st[i].Replace("_", " ");
+
                 people.Add(new Person(name, phone, address));
             }
         }
 
-        public string Phone(string s, string num)
+        public string phone(string s, string num)
         {
             seperate(s);
 
