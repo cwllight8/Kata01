@@ -35,21 +35,35 @@ namespace Kata01
         public void seperate(string s)
         {
             List<string> st = s.Trim().Split('\n').ToList();
-            string phonePattern;
-            phonePattern = @"[+]\d*[-]\d\d\d[-]\d\d\d[-]\d\d\d\d";
+            string phonePattern = @"[+]\d*[-]\d{3}[-]\d{3}[-]\d{4}";
             Regex phoneRgx = new Regex(phonePattern);
+
+            string namePattern = @"<.*>";
+            Regex nameRgx = new Regex(namePattern);
+
+            string addressPattern = @"([^a-z A-z.,0-9]|[_])";
+            Regex addressRgx = new Regex(addressPattern);
 
             for (int i = 0; i < st.Count; i++)
             {
                 string phone = "";
+                string name = "";
+                string address = "";
                 if (phoneRgx.IsMatch(st[i]))
                 {
-                    phone = "is phone number";
+                    phone = "";
                 }
-                string name = "name";
-                string address = "address";
-
-
+                else { break; }
+                if (nameRgx.IsMatch(st[i]))
+                {
+                    name = "is name";
+                }
+                else { break; }
+                if (addressRgx.IsMatch(st[i]))
+                {
+                    address = "is address";
+                }
+                
                 people.Add(new Person(name, phone, address));
             }
         }
